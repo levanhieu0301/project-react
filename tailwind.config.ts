@@ -1,10 +1,10 @@
 import type { Config } from "tailwindcss";
-// Bình thường nó hiểu file html thôi, giờ muốn nó hiểu thêm file gì ở trong thư mục nào thì cấu hình vào
+
 export default {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ], 
   theme: {
     screens: {
@@ -16,4 +16,4 @@ export default {
     },
   },
   plugins: [],
-} satisfies Config;
+} satisfies Config; 
