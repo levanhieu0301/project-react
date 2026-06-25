@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { CardJobItem } from "@/components/card/CardJobItem";
-import { Section1 } from "@/components/section1/Section1";
+import { CardJobItem } from "@/app/components/card/CardJobItem";
+import { Section1 } from "@/app/components/section1/Section1";
 import Link from "next/link";
 import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6";
 

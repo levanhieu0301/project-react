@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { CardJobItem } from "@/components/card/CardJobItem"
+import { CardJobItem } from "@/app/components/card/CardJobItem"
 import { Metadata } from "next"
 import { FaLocationDot } from "react-icons/fa6"
 

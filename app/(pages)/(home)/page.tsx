@@ -1,6 +1,6 @@
 
-import { CardCompanyItem } from "@/components/card/CardCompanyItem";
-import { Section1 } from "@/components/section1/Section1";
+import { CardCompanyItem } from "@/app/components/card/CardCompanyItem";
+import { Section1 } from "@/app/components/section1/Section1";
 import { Metadata } from "next";
 
 
