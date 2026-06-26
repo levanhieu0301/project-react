@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 export const AuthenToken = () => {
   const [isLogin, setIsLogin] = useState(false)
   const [infoUser, setInfoUser] = useState<any>(null);
+  const [infoCompany, setInfoCompany] = useState<any>(null);
   const pathname = usePathname()
   useEffect(()=> {
      fetch(`${process.env.NEXT_PUBLIC_API_URL}/authen/check`, {
@@ -17,7 +18,15 @@ export const AuthenToken = () => {
       }
       if(data.code == "success"){
           setIsLogin(true);
-          setInfoUser(data.infoUser);
+          if(data.infoUser){
+            setInfoUser(data.infoUser);
+            setInfoCompany(null)
+          }
+          if(data.infoCompany){
+            setInfoCompany(data.infoCompany)
+            setInfoUser(null);
+          }
+
       }
     })
   },[pathname])
@@ -25,6 +34,7 @@ export const AuthenToken = () => {
 
   return {
     isLogin: isLogin,
-    infoUser: infoUser
+    infoUser: infoUser,
+    infoCompany: infoCompany
   }
 }
