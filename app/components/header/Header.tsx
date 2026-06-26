@@ -1,16 +1,30 @@
 "use client"
 import Link from "next/link"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaChevronDown,FaBars, FaChevronRight   } from "react-icons/fa";
 import { HeaderMenu } from "./HeaderMenu";
 import { AuthenToken } from "@/hooks/useAuthen";
+import { useRouter } from "next/navigation";
 
 
 export const Header= () => {
+  const router = useRouter()
   const [showMenu, setShowMenu] = useState(false)
 
   const handleShowMenu = () => {
     setShowMenu(!showMenu)
+  }
+  const handleLogout = () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/logout`, {
+      credentials: "include"
+    })
+    .then(res => res.json())
+    .then((data) => {
+      if(data.code == "success"){
+        router.push("/user/login")
+      }
+    })
+
   }
   const {isLogin, infoUser} = AuthenToken();
   return (
@@ -44,10 +58,8 @@ export const Header= () => {
                         Quản lý CV đã gửi
                       </Link>
                     </li>
-                    <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
-                      <Link href="" className="text-white font-[600] text-[16px]">
+                    <li onClick={handleLogout} className="py-[10px] cursor-pointer px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
                         Đăng xuất
-                      </Link>
                     </li>
                   </ul>
                 </>
