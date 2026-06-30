@@ -16,6 +16,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import { sources } from "next/dist/compiled/webpack/webpack";
+import { Toaster, toast } from 'sonner'
 // Register the plugin
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
@@ -97,12 +98,19 @@ export const FormProfile = () => {
         })
           .then(res => res.json())
           .then(data => {
-            
+            if(data.code == "error") {
+              toast.error(data.message);
+            }
+
+            if(data.code == "success") {
+              toast.success(data.message);
+            }
           })
   }
 
   return (
     <>
+      <Toaster richColors position="top-right"/>
       {infoUser && (
         <form id="formProfileUser" onSubmit={handleSubmit} className="grid sm:grid-cols-2 grid-cols-1 gap-x-[20px] gap-y-[15px]">
           <div className="sm:col-span-2">
