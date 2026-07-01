@@ -6,11 +6,12 @@ import { FilePond, registerPlugin} from 'react-filepond'
 import 'filepond/dist/filepond.min.css'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 import JustValidate from 'just-validate';
 import { AuthenToken } from '@/hooks/useAuthen';
 import { Toaster, toast } from 'sonner'
+import { Editor } from '@tinymce/tinymce-react';
 
 
 export const FormProfileCompany = () => {
@@ -18,6 +19,7 @@ export const FormProfileCompany = () => {
   const [cities, setCities] = useState<any>([])
   const [avatars,setAvatars] = useState<any[]>([])
   const [isValid, setIsValid] = useState(false)
+  const editorRef = useRef(null);
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/company-manage/cities`)
       .then(res => res.json())
@@ -82,7 +84,11 @@ export const FormProfileCompany = () => {
       const workOverTime = event.target.workOverTime.value;
       const email = event.target.email.value;
       const phone = event.target.phone.value;
-      const description = event.target.description.value;
+      // const description = event.target.description.value;
+      let description = ""
+      if(editorRef.current){
+         description = (editorRef.current as any).getContent();
+      }
       let avatar = null
       if(avatars.length > 0){
         avatar = avatars[0].file
@@ -99,6 +105,7 @@ export const FormProfileCompany = () => {
       formData.append("email", email);
       formData.append("phone", phone);
       formData.append("description", description);
+
       formData.append("avatar", avatar);
       console.log("Chạy vào đây")
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/company-manage/profile`, {
@@ -252,12 +259,19 @@ export const FormProfileCompany = () => {
             <label htmlFor="description" className="block font-[500] text-[14px] text-black mb-[5px]">
               Mô tả chi tiết
             </label>
-            <textarea 
-              name="description" 
-              id="description" 
-              defaultValue={infoCompany.description} 
-              className="w-[100%] h-[350px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black"
-            ></textarea>
+            <Editor
+              apiKey='pxqgrr477akt31gv7edw1tomfifa3u703d2pnmvbbowfy9en'
+              onInit={ (_evt, editor) => editorRef.current = editor }
+              initialValue={infoCompany.description}
+              init={{
+                height: 500,
+              plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+              ],
+              toolbar: `undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help`,
+              images_upload_url: `${process.env.NEXT_PUBLIC_API_URL}/upload/image`
+              }}
+            />
           </div>
           <div className="sm:col-span-2">
             <button className="bg-[#0088FF] rounded-[4px] h-[48px] px-[20px] font-[700] text-[16px] text-white">
