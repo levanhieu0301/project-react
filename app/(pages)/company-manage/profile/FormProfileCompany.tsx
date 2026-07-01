@@ -11,8 +11,7 @@ registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 import JustValidate from 'just-validate';
 import { AuthenToken } from '@/hooks/useAuthen';
 import { Toaster, toast } from 'sonner'
-import { Editor } from '@tinymce/tinymce-react';
-
+import { TinyMCE } from '@/app/components/tinyMCE/tinymce';
 
 export const FormProfileCompany = () => {
   const {infoCompany} = AuthenToken();
@@ -259,19 +258,7 @@ export const FormProfileCompany = () => {
             <label htmlFor="description" className="block font-[500] text-[14px] text-black mb-[5px]">
               Mô tả chi tiết
             </label>
-            <Editor
-              apiKey='pxqgrr477akt31gv7edw1tomfifa3u703d2pnmvbbowfy9en'
-              onInit={ (_evt, editor) => editorRef.current = editor }
-              initialValue={infoCompany.description}
-              init={{
-                height: 500,
-              plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
-              ],
-              toolbar: `undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help`,
-              images_upload_url: `${process.env.NEXT_PUBLIC_API_URL}/upload/image`
-              }}
-            />
+            <TinyMCE value ={infoCompany.description} />
           </div>
           <div className="sm:col-span-2">
             <button className="bg-[#0088FF] rounded-[4px] h-[48px] px-[20px] font-[700] text-[16px] text-white">
