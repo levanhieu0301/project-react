@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AuthenToken } from '@/hooks/useAuthen';
 import { Editor } from '@tinymce/tinymce-react';
 import {  useRef } from 'react';
 
 export const TinyMCE = (props : {
-  value?: string
+  value?: string,
+  id?: string
 }) => {
-  const {value} = props;
-  const editorRef = useRef(null);
+  const {value = "", id = ""} = props;
+  const editorRef = useRef<any>(null);
   return (
     <>
       <Editor
@@ -21,6 +23,7 @@ export const TinyMCE = (props : {
         toolbar: `undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help`,
         images_upload_url: `${process.env.NEXT_PUBLIC_API_URL}/upload/image`
         }}
+        id={id}
       />
     </>
   )
