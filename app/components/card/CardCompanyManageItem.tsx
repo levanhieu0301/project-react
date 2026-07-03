@@ -6,10 +6,11 @@ import { useEffect, useState } from "react"
 import { workingFormList } from "@/config/workingForm"
 
 export const CardCompanyManageItem = () => {
-
+  const [totalPages, setTotalPages] = useState(0)
   const [infoWork, setInfoWork] = useState<any[]>([])
+  const [page, setPage] = useState(1)
   useEffect(() => {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/company-manage/job/list`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/company-manage/job/list?page=${page}`, {
       method: "POST",
       credentials: "include", // Gửi kèm cookie
       })
@@ -20,9 +21,16 @@ export const CardCompanyManageItem = () => {
         }
         if(data.code == "success") {
           setInfoWork(data.infoWork)
+          setTotalPages(data.totalPages)
         }
       })
-  }, [])
+  }, [page])
+
+  const hanlePagination = (event: any) => {
+    const value = event?.target.value
+    setPage(parseInt(value))
+  }
+
   return (
     <>
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
@@ -49,12 +57,12 @@ export const CardCompanyManageItem = () => {
               >
                 <img 
                   src={item.companyLogo}  
-                  alt={item.tilte}
+                  alt={item.title}
                   className="w-[100%] h-[100%] object-contain"
                 />
               </div>
               <h3 className="mt-[20px] mx-[16px] font-[700] text-[18px] text-[#121212] text-center flex-1 whitespace-normal line-clamp-2">
-                {item.tilte}
+                {item.title}
               </h3>
               <div className="mt-[6px] text-center font-[400] text-[14px] text-[#121212]">
                 {item.companyName}
@@ -91,6 +99,20 @@ export const CardCompanyManageItem = () => {
             </div>
           )
         })}
+      </div>
+      <div className="mt-[30px]">
+        <select onChange = {hanlePagination} name="" className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]">
+          {/* {Array.from({ length: totalPages }, (_, i) => (
+            <option key={i + 1} value={i + 1}>
+              Trang {i + 1}
+            </option>
+          ))} */}
+          {Array(totalPages).fill("").map((item, index) => (
+             <option key={index + 1} value={index + 1}>
+              Trang {index + 1}
+            </option>
+          ))}
+        </select>
       </div>
     </>
   )
