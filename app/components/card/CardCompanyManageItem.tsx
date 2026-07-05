@@ -4,6 +4,7 @@ import Link from "next/link"
 import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 import { useEffect, useState } from "react"
 import { workingFormList } from "@/config/workingForm"
+import { ButtonDelete } from "../button/ButtonDelete"
 
 export const CardCompanyManageItem = () => {
   const [totalPages, setTotalPages] = useState(0)
@@ -30,7 +31,9 @@ export const CardCompanyManageItem = () => {
     const value = event?.target.value
     setPage(parseInt(value))
   }
-
+  const handleDeleteSuccess = (idJob: string) => {
+    setInfoWork(pre => pre.filter(job => job.id !== idJob))
+  }
   return (
     <>
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
@@ -92,9 +95,11 @@ export const CardCompanyManageItem = () => {
                 <Link href={`/company-manage/job/edit/${item.id}`} className="bg-[#FFB200] rounded-[4px] font-[400] text-[14px] text-black inline-block py-[8px] px-[20px]">
                   Sửa
                 </Link>
-                <Link href="#" className="bg-[#FF0000] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]">
-                  Xóa
-                </Link>
+                <ButtonDelete
+                  api={`${process.env.NEXT_PUBLIC_API_URL}/company-manage/job/delete/${item.id}`}
+                  id={item.id}
+                  onDeleteSuccess={handleDeleteSuccess}
+                />
               </div>
             </div>
           )
