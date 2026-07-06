@@ -1,7 +1,7 @@
 
-import { CardCompanyItem } from "@/app/components/card/CardCompanyItem";
 import { Section1 } from "@/app/components/section1/Section1";
 import { Metadata } from "next";
+import { Section2 } from "./section2";
 
 
 export const metadata: Metadata = {
@@ -17,23 +17,7 @@ export default function Home() {
       {/* <!-- End Section-1  --> */}
 
       {/* <!-- Section-2  --> */}
-      <div className="section-2 py-[60px]">
-        <div className="container mx-auto px-[16px]">
-          <h2
-            className="text-center sm:text-[28px] text-[24px] font-[700] text-[#121212] mb-[30px]"
-          >
-            Nhà tuyển dụng hàng đầu
-          </h2>
-          {/* <!-- wrap  --> */}
-          <div
-            className="grid lg:grid-cols-3 grid-cols-2 sm:gap-[20px] gap-x-[10px] gap-y-[20px]"
-          >
-            {/* <!-- Item  --> */}
-            <CardCompanyItem/>
-            {/* <!-- End Item  --> */}
-          </div>
-        </div>
-      </div>
+      <Section2/>
       {/* <!-- end Section-2  --> */}
     </>
   );
