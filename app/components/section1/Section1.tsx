@@ -70,7 +70,7 @@ export const Section1 = () => {
                 className="border bg-[#121212] hover:bg-[#414042] border-[#414042] rounded-[20px] text-[#fff] inline-block py-[8px] px-[20px]"
                 >ReactJS</Link>
               <Link
-                href="/search?language=JavaScript"
+                href="/search?language=Javascript"
                 className="border bg-[#121212] hover:bg-[#414042] border-[#414042] rounded-[20px] text-[#fff] inline-block py-[8px] px-[20px]"
                 >Javascript</Link>
               <Link
