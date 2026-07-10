@@ -10,16 +10,17 @@ export const ResultSearch = () => {
   const searchParams = useSearchParams();
   const keyword = searchParams.get("language") || "";
   const city = searchParams.get("city") || "";
+  const company = searchParams.get("company") || "";
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${keyword}&city=${city}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${keyword}&city=${city}&company=${company}`)
       .then(res => res.json())
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
         }
       })
-  }, [keyword, city]);
+  }, [keyword, city, company]);
 
   return (
     <>
@@ -27,7 +28,7 @@ export const ResultSearch = () => {
         <div className="container mx-auto px-[16px]">
 
           <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
-            {jobList.length} việc làm <span className="text-[#0088FF]">{keyword} {city}</span>
+            {jobList.length} việc làm <span className="text-[#0088FF]">{keyword} {city} {company}</span>
           </h2>
 
           <div 
