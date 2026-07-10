@@ -3,21 +3,23 @@
 import { CardJobItem } from "@/app/components/card/CardJobItem";
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react";
+import { CiTrophy } from "react-icons/ci";
 
 export const ResultSearch = () => {
   const [jobList, setJobList] = useState<any[]>([]);
   const searchParams = useSearchParams();
   const keyword = searchParams.get("language") || "";
-  
+  const city = searchParams.get("city") || "";
+
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${keyword}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${keyword}&city=${city}`)
       .then(res => res.json())
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
         }
       })
-  }, [keyword]);
+  }, [keyword, city]);
 
   return (
     <>
@@ -25,7 +27,7 @@ export const ResultSearch = () => {
         <div className="container mx-auto px-[16px]">
 
           <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
-            {jobList.length} việc làm <span className="text-[#0088FF]">{keyword}</span>
+            {jobList.length} việc làm <span className="text-[#0088FF]">{keyword} {city}</span>
           </h2>
 
           <div 

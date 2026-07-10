@@ -48,17 +48,17 @@ export const HeaderMenu = (props: {
                 <FaAngleRight className="text-white text-[16px]" />
                 <ul className="absolute top-[0] left-[100%] w-[280px] bg-[#000065] hidden group-hover/sub-2:block">
                   <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096]">
-                    <Link href="/search?city=Hà+Nội" className="font-[600] text-[16px] text-white">
+                    <Link href="/search?city=Hà Nội" className="font-[600] text-[16px] text-white">
                       Hà Nội
                     </Link>
                   </li>
                   <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096]">
-                    <Link href="/search?city=Đà+Nẵng" className="font-[600] text-[16px] text-white">
+                    <Link href="/search?city=Đà Nẵng" className="font-[600] text-[16px] text-white">
                       Đà Nẵng
                     </Link>
                   </li>
                   <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096]">
-                    <Link href="/search?city=Hồ+Chí+Minh" className="font-[600] text-[16px] text-white">
+                    <Link href="/search?city=Hồ Chí Minh" className="font-[600] text-[16px] text-white">
                       Hồ Chí Minh
                     </Link>
                   </li>

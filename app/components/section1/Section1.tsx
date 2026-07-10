@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import Link from "next/link"
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 export const Section1 = () => {
   const router = useRouter()
+  const searchParams = useSearchParams();
+  const city = searchParams.get("city") || "";
   const handleSearch = (event: any) => {
     event.preventDefault();
     const valueCity = event.target.city.value
@@ -33,9 +35,10 @@ export const Section1 = () => {
             >
               <select
                 name="city"
-                id=""
+                defaultValue={city}
                 className="px-[20px] [16px] border-none gap-[142px] md:w-[240px] h-[56px] font-[500] text-[16px] rounded-[4px] w-[100%]"
               >
+                <option value="">Tất cả thành phố</option>
                 <option value="Hà Nội">Hà Nội</option>
                 <option value="Hồ Chí Minh">Hồ Chí Minh</option>
                 <option value="Đà Nẵng">Đà Nẵng</option>
