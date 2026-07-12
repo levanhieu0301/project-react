@@ -8,6 +8,7 @@ export const Section1 = () => {
   const router = useRouter()
   const searchParams = useSearchParams();
   const city = searchParams.get("city") || "";
+  const keyword =  searchParams.get("keyword") || "";
   const handleSearch = (event: any) => {
     event.preventDefault();
     const valueCity = event.target.city.value
@@ -49,6 +50,7 @@ export const Section1 = () => {
             >
               <input
                 type="text"
+                defaultValue={keyword}
                 placeholder="Nhập từ khoá..."
                 name="keyword"
                 className="flex-1 bg-[#ffff] rounded-[4px] w-[240px] h-[56px] px-[12px]"
