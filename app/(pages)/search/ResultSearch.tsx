@@ -13,17 +13,19 @@ export const ResultSearch = () => {
   const company = searchParams.get("company") || "";
   const keywordsearch = searchParams.get("keyword") || "";
   const position = searchParams.get("position") || "";
+    const workingForm = searchParams.get("workingForm") || "";
   const router = useRouter()
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${keyword}&city=${city}&company=${company}&keyword=${keywordsearch}&position=${position}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${keyword}&city=${city}
+      &company=${company}&keyword=${keywordsearch}&position=${position}&workingForm=${workingForm}`)
       .then(res => res.json())
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
         }
       })
-  }, [keyword, city, company, keywordsearch, position]);
+  }, [keyword, city, company, keywordsearch, position, workingForm]);
 
   const handleFilterPosition = (event: any) => {
     const value = event.target.value;
@@ -38,7 +40,20 @@ export const ResultSearch = () => {
 
     router.push(`?${params.toString()}`);
   }
+  
+  const handleFilterWorkingForm = (event: any) => {
+    const value = event.target.value;
 
+    const params = new URLSearchParams(searchParams.toString());
+    
+    if(value) {
+      params.set("workingForm", value);
+    } else {
+      params.delete("workingForm");
+    }
+
+    router.push(`?${params.toString()}`);
+  }
 
   return (
     <>
@@ -64,11 +79,14 @@ export const ResultSearch = () => {
               <option value="Senior">Senior</option>
               <option value="Manager">Manager</option>
             </select>
-            <select name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
+            <select 
+              onChange={handleFilterWorkingForm}
+              defaultValue={workingForm}
+              name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
               <option value="">Hình thức làm việc</option>
-              <option value="">Tại văn phòng</option>
-              <option value="">Làm từ xa</option>
-              <option value="">Linh hoạt</option>
+              <option value="office">Tại văn phòng</option>
+              <option value="remote">Làm từ xa</option>
+              <option value="flexible">Linh hoạt</option>
             </select>
           </div>
 
