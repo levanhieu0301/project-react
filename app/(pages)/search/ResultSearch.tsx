@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { CardJobItem } from "@/app/components/card/CardJobItem";
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react";
 import { CiTrophy } from "react-icons/ci";
 
@@ -12,16 +12,33 @@ export const ResultSearch = () => {
   const city = searchParams.get("city") || "";
   const company = searchParams.get("company") || "";
   const keywordsearch = searchParams.get("keyword") || "";
+  const position = searchParams.get("position") || "";
+  const router = useRouter()
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${keyword}&city=${city}&company=${company}&keyword=${keywordsearch}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${keyword}&city=${city}&company=${company}&keyword=${keywordsearch}&position=${position}`)
       .then(res => res.json())
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
         }
       })
-  }, [keyword, city, company, keywordsearch]);
+  }, [keyword, city, company, keywordsearch, position]);
+
+  const handleFilterPosition = (event: any) => {
+    const value = event.target.value;
+
+    const params = new URLSearchParams(searchParams.toString());
+    
+    if(value) {
+      params.set("position", value);
+    } else {
+      params.delete("position");
+    }
+
+    router.push(`?${params.toString()}`);
+  }
+
 
   return (
     <>
@@ -38,14 +55,14 @@ export const ResultSearch = () => {
               boxShadow: "0px 4px 20px 0px #0000000F"
             }}
           >
-            <select name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
+            <select onChange={handleFilterPosition} defaultValue={position} name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
               <option value="">Cấp bậc</option>
-              <option value="">Intern</option>
-              <option value="">Fresher</option>
-              <option value="">Junior</option>
-              <option value="">Middle</option>
-              <option value="">Senior</option>
-              <option value="">Manager</option>
+              <option value="Intern">Intern</option>
+              <option value="Fresher">Fresher</option>
+              <option value="Junior">Junior</option>
+              <option value="Middle">Middle</option>
+              <option value="Senior">Senior</option>
+              <option value="Manager">Manager</option>
             </select>
             <select name="" className="border border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
               <option value="">Hình thức làm việc</option>
