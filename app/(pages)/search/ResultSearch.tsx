@@ -14,18 +14,23 @@ export const ResultSearch = () => {
   const keywordsearch = searchParams.get("keyword") || "";
   const position = searchParams.get("position") || "";
     const workingForm = searchParams.get("workingForm") || "";
+    
+  const page = searchParams.get("page") || "";
+  
+  const [totalPage, setTotalPage] = useState();
   const router = useRouter()
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${keyword}&city=${city}
-      &company=${company}&keyword=${keywordsearch}&position=${position}&workingForm=${workingForm}`)
+      &company=${company}&keyword=${keywordsearch}&position=${position}&workingForm=${workingForm}&page=${page}`)
       .then(res => res.json())
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
+          setTotalPage(data.totalPage);
         }
       })
-  }, [keyword, city, company, keywordsearch, position, workingForm]);
+  }, [keyword, city, company, keywordsearch, position, workingForm, page]);
 
   const handleFilterPosition = (event: any) => {
     const value = event.target.value;
@@ -54,6 +59,21 @@ export const ResultSearch = () => {
 
     router.push(`?${params.toString()}`);
   }
+
+  const handlePagination = (event: any) => {
+    const value = event.target.value;
+
+    const params = new URLSearchParams(searchParams.toString());
+    
+    if(value) {
+      params.set("page", value);
+    } else {
+      params.delete("page");
+    }
+
+    router.push(`?${params.toString()}`);
+  }
+
 
   return (
     <>
@@ -97,10 +117,12 @@ export const ResultSearch = () => {
           </div>
 
           <div className="mt-[30px]">
-            <select name="" className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]">
-              <option value="">Trang 1</option>
-              <option value="">Trang 2</option>
-              <option value="">Trang 3</option>
+            <select onChange={handlePagination} defaultValue={page}  name="" className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]">
+              {Array(totalPage).fill("").map((item, index) => (
+                  <option value={index+1} key={index}>
+                    Trang {index+1}
+                  </option>
+                ))}
             </select>
           </div>
 
