@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import Link from "next/link"
 import { FaArrowRightLong, FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 import { workingFormList } from "@/config/workingForm"
+import { FormApply } from "./FormApply"
 
 export const metadata: Metadata = {
   title: "Chi tiết công việc",
@@ -83,43 +84,7 @@ const { id } = await params;
                    <div dangerouslySetInnerHTML={{ __html: jobDetail.description }} />
                 </div>
                 {/* Hết Mô tả chi tiết */}
-
-                {/* Form ứng tuyển */}
-                <div id="formApllay" className="border border-[#DEDEDE] rounded-[8px] p-[20px] mt-[20px]">
-                  <h2 className="font-[700] text-[20px] text-black mb-[20px]">
-                    Ứng tuyển ngay
-                  </h2>
-                  <form action="" className="">
-                    <div className="mb-[15px]">
-                      <label htmlFor="fullName" className="block font-[500] text-[14px] text-black mb-[5px]">
-                        Họ tên *
-                      </label>
-                      <input type="text" name="" id="fullName" className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black" />
-                    </div>
-                    <div className="mb-[15px]">
-                      <label htmlFor="email" className="block font-[500] text-[14px] text-black mb-[5px]">
-                        Email *
-                      </label>
-                      <input type="email" name="" id="email" className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black" />
-                    </div>
-                    <div className="mb-[15px]">
-                      <label htmlFor="phone" className="block font-[500] text-[14px] text-black mb-[5px]">
-                        Số điện thoại *
-                      </label>
-                      <input type="text" name="" id="phone" className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black" />
-                    </div>
-                    <div className="mb-[15px]">
-                      <label htmlFor="fileCV" className="block font-[500] text-[14px] text-black mb-[5px]">
-                        File CV dạng PDF *
-                      </label>
-                      <input type="file" name="" id="fileCV" accept="application/pdf" className="" />
-                    </div>
-                    <button className="w-[100%] h-[48px] rounded-[4px] bg-[#0088FF] font-[700] text-[16px] text-white">
-                      Gửi CV ứng tuyển
-                    </button>
-                  </form>
-                </div>
-                {/* Hết Form ứng tuyển */}
+                <FormApply jobId={jobDetail.id}/>
               </div>
               {/* Right */}
               <div className="flex-1">
