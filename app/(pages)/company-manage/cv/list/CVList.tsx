@@ -5,9 +5,12 @@ import Link from "next/link"
 import { useEffect, useState } from "react";
 import { FaBriefcase, FaCircleCheck, FaEnvelope, FaEye, FaPhone, FaUserTie } from "react-icons/fa6"
 import { cvStatusList } from "@/config/cvList";
+import { useRouter } from "next/navigation";
 
 export const CVList = () => {
-   const [listCV, setListCV] = useState<any[]>([]);
+    const [listCV, setListCV] = useState<any[]>([]);
+    const [action, setAction] = useState("initial")
+    const router = useRouter();
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/company-manage/cv/list`, {
@@ -21,7 +24,31 @@ export const CVList = () => {
         }
       })
   }, []);
+    // const statusDefault = cvStatusList.find(itemStatus => itemStatus.value === item.status);
+    // const [status, setStatus] = useState(statusDefault);
+  const handleAction = (action: string, id: string) => {
+     fetch(`${process.env.NEXT_PUBLIC_API_URL}/company-manage/cv/change-status`, {
+      method: "PATCH",
+      credentials: "include", // Gửi kèm cookie
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        action: action,
+        id: id
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if(data.code == "success") {
+          setListCV((pre) => pre.map((item) => (
+            item.id == id? {...item, status: action}: item
+          )))
+        }
+      })
 
+
+  }
   return (
     <>
     <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
@@ -75,15 +102,15 @@ export const CVList = () => {
             <Link href={`/company-manage/cv/detail/${item.id}`} className="bg-[#0088FF] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]">
               Xem
             </Link>
-            <Link href="#" className="bg-[#9FDB7C] rounded-[4px] font-[400] text-[14px] text-black inline-block py-[8px] px-[20px]">
+            <button onClick={() => handleAction("approved", item.id)} className="bg-[#9FDB7C] rounded-[4px] font-[400] text-[14px] text-black inline-block py-[8px] px-[20px]">
               Duyệt
-            </Link>
-            <Link href="#" className="bg-[#FF5100] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]">
+            </button>
+            <button onClick={() => handleAction("rejected", item.id)} className="bg-[#FF5100] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]">
               Từ chối
-            </Link>
-            <Link href="#" className="bg-[#FF0000] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]">
+            </button>
+            <button className="bg-[#FF0000] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]">
               Xóa
-            </Link>
+            </button>
           </div>
         </div>
         )
