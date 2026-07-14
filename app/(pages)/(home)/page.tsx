@@ -1,4 +1,4 @@
-
+import { Suspense } from "react";
 import { Section1 } from "@/app/components/section1/Section1";
 import { Metadata } from "next";
 import { Section2 } from "./section2";
@@ -13,7 +13,9 @@ export default function Home() {
   return (
     <>
       {/* <!-- Section-1  --> */}
-      <Section1/>
+       <Suspense fallback={<div>Đang tải...</div>}>
+        <Section1 />
+      </Suspense>
       {/* <!-- End Section-1  --> */}
 
       {/* <!-- Section-2  --> */}
