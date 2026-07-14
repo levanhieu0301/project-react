@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { FaBriefcase, FaCircleCheck, FaEnvelope, FaEye, FaPhone, FaUserTie } from "react-icons/fa6"
 import { cvStatusList } from "@/config/cvList";
 import { useRouter } from "next/navigation";
+import { ButtonDelete } from "@/app/components/button/ButtonDelete";
 
 export const CVList = () => {
     const [listCV, setListCV] = useState<any[]>([]);
@@ -46,9 +47,11 @@ export const CVList = () => {
           )))
         }
       })
-
-
   }
+  const handleDeleteSuccess = (deleteId: string) => {
+    setListCV(prev => prev.filter(cv => cv.id !== deleteId));
+  }
+
   return (
     <>
     <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
@@ -108,9 +111,7 @@ export const CVList = () => {
             <button onClick={() => handleAction("rejected", item.id)} className="bg-[#FF5100] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]">
               Từ chối
             </button>
-            <button className="bg-[#FF0000] rounded-[4px] font-[400] text-[14px] text-white inline-block py-[8px] px-[20px]">
-              Xóa
-            </button>
+            <ButtonDelete id={item.id} api={`${process.env.NEXT_PUBLIC_API_URL}/company-manage/cv/delete/${item.id}`}  onDeleteSuccess={handleDeleteSuccess}/>
           </div>
         </div>
         )

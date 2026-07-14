@@ -81,7 +81,7 @@ export const ResultSearch = () => {
         <div className="container mx-auto px-[16px]">
 
           <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
-            {jobList.length} việc làm <span className="text-[#0088FF]">{keyword} {city} {company} {keyword}</span>
+            {jobList.length} việc làm <span className="text-[#0088FF]">{keyword} {city} {company} {keywordsearch}</span>
           </h2>
 
           <div 
